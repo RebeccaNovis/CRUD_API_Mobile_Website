@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Bowling Reservation</title>
+    <link rel='stylesheet' href='style.css'>
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <h1>BSU Games Center</h1>
+
+    <hr />
+    <h2>Make a Reservation</h2>
+    <div class="center-form">
+        <form>
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>First Name</label>
+                    <br>
+                    <input type="text" id="inputFirstName" name="inputFirstName">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputFirstName-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Last Name</label>
+                    <br>
+                    <input type="text" id="inputLastName" name="inputLastName">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputLastName-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Number of lanes you want to reserve</label>
+                    <br>
+                    <select id="numLanes">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="Whole Games Center">Whole Games Center</option>
+                    </select>
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='numLanes-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Date of reservation</label>
+                    <br>
+                    <input type="date" id="inputDate">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputDate-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Start time of reservation</label>
+                    <br>
+                    <input type="time" id="inputStartTime">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputStartTime-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>End time of reservation</label>
+                    <br>
+                    <input type="time" id="inputEndTime">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputEndTime-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Do you attend or work at BSU?</label>
+                    <br>
+                    <label for="yes" class = "radio-control">
+                        <input type="radio" id="isBSU1" name="isBSU" value="1">Yes
+                    </label>
+                    <label for="no" class = "radio-control">
+                        <input type="radio" id="isBSU0" name="isBSU" value="0">No
+                    </label>
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='isBSU-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Please provide a photo of your student or faculty ID</label>
+                    <br>
+                    <input type="file" id="idPhoto">
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='idPhoto-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Anything else you would like us to know? (Birthday party, small children, etc.)</label>
+                    <br>
+                    <textarea id="inputMisc" rows="10" cols="30"></textarea>
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='inputMisc-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-4'></div>
+                <div class='col-8'>
+                    <label>Are you planning on paying for this reservation before the day of your reservation?</label>
+                    <br>
+                    <label for="yes" class="radio-control">
+                        <input type="radio" id="isPaying1" name="isPaying" value="1">Yes
+                    </label>
+                    <label for="no" class="radio-control">
+                        <input type="radio" id="isPaying0" name="isPaying" value="0">No
+                    </label>
+                </div>
+            </div>
+            <div class='row'>
+                <div class=col-4></div>
+                <div class=col-8>
+                    <div id='isPaying-error' class='col-12 error-message'>&nbsp;</div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div id='invalidate-form' class='alert-error'></div>
+    <div id='success-form' class='alert-success'></div>
+
+    <div class='row'>
+        <div class='col-12 centered'>
+            <button id='submit'>Submit</button>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        //Hide banners at start of script
+        const errorBanner = document.getElementById('invalidate-form');
+        const successBanner = document.getElementById('success-form');
+        errorBanner.hidden = true;
+        successBanner.hidden = true;
+
+        const isEmpty = (obj) => Object.keys(obj).length === 0;
+
+
+        document.getElementById('submit').addEventListener('click', (event) => {
+            const formData = new FormData();
+
+            if (document.getElementById('inputFirstName').value.length !== 0) {
+                formData.append('inputFirstName', document.getElementById('inputFirstName').value);
+            }
+            if (document.getElementById('inputLastName').value.length !== 0) {
+                formData.append('inputLastName', document.getElementById('inputLastName').value);
+            }
+            if (document.getElementById('numLanes').value.length !== 0) {
+                formData.append('numLanes', document.getElementById('numLanes').value);
+            }
+            if (document.getElementById('inputDate').value.length !== 0) {
+                formData.append('inputDate', document.getElementById('inputDate').value);
+            }
+            if (document.getElementById('inputStartTime').value.length !== 0) {
+                formData.append('inputStartTime', document.getElementById('inputStartTime').value);
+            }
+            if (document.getElementById('inputEndTime').value.length !== 0) {
+                formData.append('inputEndTime', document.getElementById('inputEndTime').value);
+            }
+            for (let i = 0; i < document.getElementsByName('isBSU').length; i++) {
+                if (document.getElementsByName('isBSU')[i].checked) {
+                    formData.append('isBSU', document.getElementsByName('isBSU')[i].value);
+                }
+            }
+            if (document.getElementById('idPhoto').value.length !== 0) {
+                formData.append('idPhoto', document.getElementById('idPhoto').files[0]);
+            }
+            if (document.getElementById('inputMisc').value.length !== 0) {
+                formData.append('inputMisc', document.getElementById('inputMisc').value);
+            }
+            for (let i = 0; i < document.getElementsByName('isPaying').length; i++) {
+                if (document.getElementsByName('isPaying')[i].checked) {
+                    formData.append('isPaying', document.getElementsByName('isPaying')[i].value);
+                }
+            }
+
+            //Settings for FETCH API request
+            let fetchSettings = {
+                method: 'POST',
+                body: formData
+            };
+
+            //Send FETCH API request
+            fetch("http://localhost/reservation/", fetchSettings)
+                .then((response) => {
+                    return new Promise((resolve) => response.json()
+                        .then((json) => resolve({
+                            status: response.status,
+                            json,
+                        })
+                        ));
+                })
+                //Logic to display errors on form 
+                .then(({ status, json }) => {
+                    const errorMessages = document.getElementsByClassName('error-message');
+                    errorBanner.hidden = true;
+                    successBanner.hidden = true;
+                    for (htmlElement of errorMessages) {
+                        htmlElement.innerHTML = '&nbsp;';
+                    }
+                    if (status === 400) { //if the status is 400 (error) then dsplay the error banner 
+                        errorBanner.innerText = 'Form has errors. Please correct them and resubmit.';
+                        errorBanner.hidden = false;
+                        for (error of json.errors) {
+                            const errorId = error.param + '-error'; //sets errorID equal to the error parameter + '-error' ie. color-error
+                            document.getElementById(errorId).innerHTML = error.msg;
+                        }
+                    }
+                    else if (status === 200) {
+                        successBanner.innerText = 'Form submitted successfully.';
+                        successBanner.hidden = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            return;
+        });               
+    </script>
+</body>
+
+</html>

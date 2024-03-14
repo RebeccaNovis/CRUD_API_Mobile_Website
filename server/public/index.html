@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Games Center Reservations</title>
+    <link rel='stylesheet' href='style.css'>
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <h1>BSU Games Center Reservations</h1>
+
+    <div class = 'centered'>
+        <img class = 'bronco-img' src = 'https://upload.wikimedia.org/wikipedia/en/thumb/9/94/Primary_Boise_State_Broncos_Athletics_Logo.svg/1200px-Primary_Boise_State_Broncos_Athletics_Logo.svg.png'>
+    </div>
+
+    <hr />
+
+    <div class='row'>
+        <div class='col-12 centered'>
+            <button class = 'blue-button' id='to-reservations'>Make a Reservation </button>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-6'>
+            <div class='row indent'>
+                <div class='col-6'>
+                    <label>Search reservations for a name</label>
+                </div>
+                <div class='col-6'>
+                    <input id='searchName' type='text' />
+                </div>
+            </div>
+        </div>
+        <div class='col-6'>
+            <div class='row indent'>
+                <div class='col-6'>
+                    <label>Sort By Date of Reservation</label>
+                </div>
+                <div class='col-6'>
+                    <select id='sort'>
+                        <option value=''>Original Order</option>
+                        <option value='ASC'>Ascending</option>
+                        <option value='DESC'>Descending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='row'>
+        <div class='col-6'>
+            <div class='row indent'>
+                <div class='col-6'>
+                    <label>Only show reservations made by BSU students/faculty</label>
+                </div>
+                <div class='col-6'>
+                    <label class='check-container'>
+                        <input id='stuFac' type='checkbox' />
+                        <div class="checkmark"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class='col-6'>
+            <div class='row indent'>
+                <div class='col-6'>
+                    <label>Only show reservations made by visitors</label>
+                </div>
+                <div class='col-6'>
+                    <label class='check-container'>
+                        <input id='visitors' type='checkbox' />
+                        <div class="checkmark"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='centered'>
+        <div class='row'>
+            <div class='col-12'>
+                <div class='row'>
+                    <div class='col-6'>
+                        <label>Limit Number of Rows?</label>
+                    </div>
+                    <div class='col-6'>
+                        <select id='limit'>
+                            <option value=''>Show all</option>
+                            <option value='5'>Limit to 5</option>
+                            <option value='4'>Limit to 4</option>
+                            <option value='3'>Limit to 3</option>
+                            <option value='2'>Limit to 2</option>
+                            <option value='1'>Limit to 1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-12 centered'>
+            <button id='search'>Load Reservations</button>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class='row'>
+        <div class=col-12>
+            <div id='displayReservations' class='overflow'>
+                Press "Load Reservations" to display reservations.
+            </div>
+        </div>
+    </div>
+    <script>
+        const isEmpty = (obj) => Object.keys(obj).length === 0;
+
+        //open insert.html in a new window after pressing 'make reservation' button
+        document.getElementById('to-reservations').addEventListener('click', (event) => {
+            window.open("insert.html", "_blank");
+        });
+
+        document.getElementById('search').addEventListener('click', (event) => {
+            //const formData = new FormData();  note: remove formData and replace w/ getParameters because GET method can't have body
+            const getParameters = {};
+
+            if (document.querySelector('#stuFac:checked')) {
+                //formData.append('stuFac', 0);
+                getParameters.stuFac = 0;
+            }
+            if (document.querySelector('#visitors:checked')) {
+                //formData.append('visitors', 0);
+                getParameters.visitors = 0;
+            }
+            if (document.getElementById('searchName').value.length !== 0) {
+                //formData.append('searchName', document.getElementById('searchName').value);
+                getParameters.searchName = document.getElementById('searchName').value;
+            }
+            if (document.getElementById('sort').value.length !== 0) {
+                //formData.append('sort', document.getElementById('sort').value);
+                getParameters.sort = document.getElementById('sort').value;
+            }
+            if (document.getElementById('limit').value.length !== 0) {
+                //formData.append('limit', document.getElementById('limit').value);
+                getParameters.limit = document.getElementById('limit').value;
+            }
+
+            //Settings for FETCH API request
+            let fetchSettings = {
+                method: 'GET'
+            };
+
+            //Send FETCH API request
+            fetch("http://localhost/reservation/" + (!isEmpty(getParameters) ? '?' + new URLSearchParams(getParameters) : ''), fetchSettings)
+                .then((response) => {
+                    return new Promise((resolve) => response.json()
+                        .then((json) => resolve({
+                            status: response.status,
+                            json,
+                        })
+                        ));
+                })
+                //Logic to display errors on form 
+                .then(({ status, json }) => {
+                    if (status === 200) {
+                        let displayTable = '<table>' +
+                            '<thead>' +
+                            '<tr>' +
+                            '<th width="9.09%">Full Name</th>' +
+                            '<th width="9.09%">Number of Lanes</th>' +
+                            '<th width="9.09%">Date</th>' +
+                            '<th width="9.09%">Start Time</th>' +
+                            '<th width="9.09%">End Time</th>' +
+                            '<th width="9.09%">Is Reservation for Student or Faculty?</th>' +
+                            '<th width="9.09%">Proof of Student or Faculty</th>' +
+                            '<th width="9.09%">Extra Info</th>' +
+                            '<th width="9.09%">Paid for Reservation?</th>' +
+                            '<th width="9.09%">Edit</th>' +
+                            '<th width="9.09%">Delete</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody>';
+                        if (typeof json.data !== 'undefined') {
+                            for (row of json.data) {
+                                displayTable += '<tr>' +
+                                    '<td>' + row.fullName + '</td>' +
+                                    '<td>' + row.number_lanes + '</td>' +
+                                    '<td>' + row.formatted_date + '</td>' +
+                                    '<td>' + row.formatted_start_time + '</td>' +
+                                    '<td>' + row.formatted_end_time + '</td>' +
+                                    '<td>' + row.is_bsu + '</td>';
+                                if (null !== row.proof_bsu) {
+                                    let imgPath = '';
+                                    imgPath += row.proof_bsu;
+                                    let newImgPath = imgPath.replace("public/", "");
+                                    displayTable += '<td>' + "<img src ='/" + newImgPath + " '/>" + '</td>';
+                                } else {
+                                    displayTable += '<td> </td>';
+                                }
+                                displayTable +=
+                                    '<td>' + row.extra_info + '</td>' +
+                                    '<td>' + row.is_paid + '</td>' +
+                                    '<td><a href=edit.html?id=' + row.id + '>Edit</td>' +
+                                    '<td><a href=delete.html?id=' + row.id + '>Delete</td>' +
+                                    '</tr>';
+                            }
+                        }
+                        displayTable += '</tbody></table>';
+                        document.getElementById('displayReservations').innerHTML = displayTable;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            return;
+        });               
+    </script>
+</body>
+
+</html>
